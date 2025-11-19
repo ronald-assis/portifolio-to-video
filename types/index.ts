@@ -1,4 +1,4 @@
-export type Category = 'Casamento' | 'Debutante' | 'Institucional' | 'Todos';
+export type Category = 'Casamento' | 'Debutante' | 'Eventos' | 'Todos';
 
 export interface Video {
   id: string;
@@ -7,4 +7,5 @@ export interface Video {
   category: Category;
   url: string;
   thumbnail: string;
+  orientation: 'horizontal' | 'vertical';
 }

@@ -1,63 +1,96 @@
 'use client';
 import { FormEvent, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus('sending');
-    // Aqui você integraria com o EmailJS ou API Route
-    setTimeout(() => setStatus('success'), 2000);
+    setStatus('loading');
+    
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+      eventDate: formData.get('eventDate'),
+      eventType: formData.get('eventType'),
+    };
+    
+    try {
+      // Chamada para a API Route
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      
+      if (res.ok) {
+        setStatus('success');
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
   }
   
   return (
-    <div className="min-h-screen bg-neutral-950 text-white pt-24 px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-neutral-950 text-slate-800 dark:text-white pt-24 px-4 transition-colors">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2">Vamos conversar?</h1>
-        <p className="text-neutral-400 mb-8">Me conte sobre o seu sonho. Responderei o mais rápido possível.</p>
-        
-        <form onSubmit={handleSubmit} className="space-y-6 bg-neutral-900 p-8 rounded-2xl border border-neutral-800">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Seu Nome</label>
-              <input type="text" required className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">WhatsApp</label>
-              <input type="tel" required className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-            </div>
-          </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <h1 className="text-4xl font-bold mb-2">Solicite um Orçamento</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">Vamos contar a sua história juntos.</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Data do Evento</label>
-              <input type="date" className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-neutral-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+          <form onSubmit={handleSubmit} className="bg-white dark:bg-neutral-900 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-neutral-800 space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Seu Nome</label>
+                <input name="name" required className="w-full p-3 rounded-lg bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input name="email" type="email" required className="w-full p-3 rounded-lg bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700" />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Tipo de Evento</label>
-              <select className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-neutral-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
-                <option>Casamento</option>
-                <option>Debutante (15 Anos)</option>
-                <option>Ensaio Externo</option>
-                <option>Outro</option>
-              </select>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Data do Evento</label>
+                <input name="eventDate" type="date" className="w-full p-3 rounded-lg bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 text-gray-500 dark:text-gray-300" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Tipo de Evento</label>
+                <select name="eventType" className="w-full p-3 rounded-lg bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700">
+                  <option>Casamento</option>
+                  <option>Debutante (15 Anos)</option>
+                  <option>Ensaio</option>
+                  <option>Outro</option>
+                </select>
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-neutral-400 mb-1">Mensagem / Detalhes</label>
-            <textarea rows={4} className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition"></textarea>
-          </div>
-          
-          <button
-            type="submit"
-            disabled={status === 'sending' || status === 'success'}
-            className="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-gray-200 transition disabled:opacity-50"
-          >
-            {status === 'sending' ? 'Enviando...' : status === 'success' ? 'Mensagem Enviada!' : 'Solicitar Orçamento'}
-          </button>
-        </form>
+            
+            <div>
+              <label className="block text-sm font-medium mb-2">Detalhes do Sonho</label>
+              <textarea name="message" rows={4} required className="w-full p-3 rounded-lg bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700"></textarea>
+            </div>
+            
+            <button
+              type="submit"
+              disabled={status === 'loading' || status === 'success'}
+              className={`w-full py-4 rounded-lg font-bold text-white transition-all ${
+                status === 'success' ? 'bg-green-600' : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              {status === 'loading' ? 'Enviando...' : status === 'success' ? 'Enviado com Sucesso!' : 'Enviar Solicitação'}
+            </button>
+            
+            {status === 'error' && <p className="text-red-500 text-center">Erro ao enviar. Tente novamente.</p>}
+          </form>
+        </motion.div>
       </div>
     </div>
   );

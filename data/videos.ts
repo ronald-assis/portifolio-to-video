@@ -3,18 +3,38 @@ import { Video } from '@/types';
 export const videos: Video[] = [
   {
     id: 'v1',
-    title: 'Larissa & João - O Sim',
-    description: 'Cerimônia emocionante ao pôr do sol na Fazenda Vila Rica.',
-    category: 'Casamento',
-    url: 'https://www.youtube.com/embed/SEU_LINK_AQUI',
-    thumbnail: '/thumbs/wedding-1.jpg'
+    title: 'ROOTS',
+    description: 'Evento na Igreja Sara Nossa Terra - Saúde.',
+    category: 'Eventos',
+    url: 'https://www.youtube.com/watch?v=h7JyZr617Ls',
+    thumbnail: 'https://img.youtube.com/vi/h7JyZr617Ls/maxresdefault.jpg',
+    orientation: 'horizontal'
   },
   {
     id: 'v2',
-    title: '15 Anos da Bia',
-    description: 'Energia pura! Uma noite inesquecível com muita balada.',
-    category: 'Debutante',
-    url: 'https://www.youtube.com/embed/SEU_LINK_AQUI_2',
-    thumbnail: '/thumbs/debut-1.jpg'
+    title: 'Revisao de Vidas',
+    description: 'Retiro na Igreja Sara Nossa Terra - Diadema Centro.',
+    category: 'Eventos',
+    url: 'https://www.youtube.com/embed/5c9nMq9aWpg',
+    thumbnail: 'https://img.youtube.com/vi/5c9nMq9aWpg/maxresdefault.jpg',
+    orientation: 'horizontal'
   },
+  {
+    id: 'reels-debut-bia',
+    title: 'Equenta AVIVA',
+    description: 'Evento na Igreja Sara Nossa Terra - Saúde.',
+    category: 'Eventos',
+    url: 'https://www.youtube.com/embed/bPcZh8zuU64',
+    thumbnail: '/thumbs/capa-vertical-aviva.png',
+    orientation: 'vertical'
+  },
+  {
+    id: 'cha-revelacao',
+    title: 'Chá Revelação',
+    description: 'Chá Revelação',
+    category: 'Eventos',
+    url: 'https://www.youtube.com/embed/hS3s-thXnmI',
+    thumbnail: 'https://img.youtube.com/vi/hS3s-thXnmI/maxresdefault.jpg',
+    orientation: 'horizontal'
+  }
 ];
