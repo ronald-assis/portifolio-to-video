@@ -10,7 +10,7 @@ export default function VideosPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category>('Todos');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   
-  const categories: Category[] = ['Todos', 'Casamento', 'Debutante'];
+  const categories: Category[] = ['Todos', 'Eventos', 'Retiros'];
   
   const filteredVideos = videos.filter((video) =>
     selectedCategory === 'Todos' ? true : video.category === selectedCategory

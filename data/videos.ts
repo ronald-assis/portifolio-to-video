@@ -12,7 +12,7 @@ export const videos: Video[] = [
   {
     id: 2,
     title: 'Revisao de Vidas',
-    category: 'Eventos',
+    category: 'Retiros',
     url: 'https://www.youtube.com/embed/5c9nMq9aWpg',
     thumbnail: 'https://img.youtube.com/vi/5c9nMq9aWpg/maxresdefault.jpg',
     orientation: 'horizontal'

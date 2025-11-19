@@ -1,4 +1,4 @@
-export type Category = 'Casamento' | 'Debutante' | 'Eventos' | 'Todos';
+export type Category = 'Casamento' | 'Debutante' | 'Eventos' | 'Todos' | 'Retiros';
 
 export interface Video {
   id: number;
