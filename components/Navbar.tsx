@@ -30,7 +30,6 @@ export default function Navbar() {
             RONALD<span className="text-blue-500">.FILMS</span>
           </Link>
           
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             <Link href="/videos" className="text-sm font-medium hover:text-blue-500 dark:text-gray-300 dark:hover:text-white transition-colors">
               PORTFÓLIO
@@ -40,7 +39,6 @@ export default function Navbar() {
             </Link>
           </div>
           
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -53,7 +51,6 @@ export default function Navbar() {
         </div>
       </nav>
       
-      {/* Mobile Sidebar */}
       <div
         className={`fixed inset-0 z-[100] bg-neutral-950/95 backdrop-blur-xl transition-transform duration-300 ease-in-out md:hidden ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'

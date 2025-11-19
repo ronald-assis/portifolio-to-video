@@ -49,14 +49,13 @@ export default function ContactPage() {
   
   return (
     <div className="relative min-h-screen bg-neutral-950 text-white">
-      {/* Imagem de Fundo da Página Inteira */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/thumbs/roots.png"
           alt="Casal em um campo"
           fill
           priority
-          className="object-cover object-center opacity-10"
+          className="object-cover object-center opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-neutral-950" />
       </div>
