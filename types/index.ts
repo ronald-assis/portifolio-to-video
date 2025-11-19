@@ -1,11 +1,11 @@
 export type Category = 'Casamento' | 'Debutante' | 'Eventos' | 'Todos';
 
 export interface Video {
-  id: string;
+  id: number;
   title: string;
-  description: string;
   category: Category;
-  url: string;
   thumbnail: string;
+  url: string;
   orientation: 'horizontal' | 'vertical';
 }
+
