@@ -7,7 +7,6 @@ export default function ContactPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('sending');
-    // Aqui você integraria com o EmailJS ou API Route
     setTimeout(() => setStatus('success'), 2000);
   }
   
@@ -39,7 +38,8 @@ export default function ContactPage() {
               <select className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-neutral-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                 <option>Casamento</option>
                 <option>Debutante (15 Anos)</option>
-                <option>Ensaio Externo</option>
+                <option>Evento</option>
+                <option>Aniversário</option>
                 <option>Outro</option>
               </select>
             </div>
