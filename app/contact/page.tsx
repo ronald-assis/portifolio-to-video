@@ -25,7 +25,6 @@ export default function ContactPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('sending');
-    // Simula o envio do formulário
     setTimeout(() => {
       setStatus('success');
     }, 2000);
@@ -60,7 +59,6 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-neutral-950" />
       </div>
       
-      {/* Conteúdo da Página */}
       <div className="relative z-10 pt-32 pb-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -71,7 +69,6 @@ export default function ContactPage() {
           </div>
           
           <div className="grid md:grid-cols-5 gap-12 lg:gap-16 items-start">
-            {/* Coluna da Esquerda: Infos e FAQ */}
             <div className="md:col-span-2 space-y-10">
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Informações de Contato</h3>
@@ -79,7 +76,7 @@ export default function ContactPage() {
                   <a href="mailto:ronaldassi71@gmail.com" className="flex items-center gap-3 hover:text-blue-400 transition-colors">
                     <FiMail className="text-blue-400 flex-shrink-0" /> ronaldassi71@gmail.com
                   </a>
-                  <a href="https://wa.me/5511978493897" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-blue-400 transition-colors">
+                  <a href="https://wa.me/5511978493897?text=Gostaria%20de%20Fazer%20um%20Or%C3%A7amento%20de%20Videos" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-blue-400 transition-colors">
                     <FiMessageSquare className="text-blue-400 flex-shrink-0" /> +55 (11) 97849-3897
                   </a>
                 </div>
@@ -97,7 +94,6 @@ export default function ContactPage() {
               </div>
             </div>
             
-            {/* Coluna da Direita: Formulário */}
             <form onSubmit={handleSubmit} className="md:col-span-3 space-y-6 bg-black/30 backdrop-blur-sm p-8 rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
