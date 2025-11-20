@@ -1,36 +1,205 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Video Portfolio & Contact Website
 
-## Getting Started
+A modern Next.js portfolio website built for a videographer/filmmaker, featuring a video gallery and integrated contact form with email notifications.
 
-First, run the development server:
+## ✨ Features
+
+- **Video Portfolio Gallery**: Showcase your video work with a responsive grid layout
+- **Video Modal Player**: Watch videos in a full-screen modal with smooth animations
+- **Contact Form**: Integrated contact form with email notifications via Nodemailer
+- **FAQ Section**: Built-in frequently asked questions for clients
+- **Responsive Design**: Fully responsive across all devices
+- **Modern UI**: Built with Tailwind CSS for a clean, professional look
+- **Type-Safe**: Written in TypeScript for better developer experience
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Email**: Nodemailer
+- **Icons**: React Icons
+- **Package Manager**: pnpm
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- pnpm (or npm/yarn)
+- SMTP email account (Gmail, Outlook, etc.)
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+    git clone <your-repo-url>
+    cd portifolio-to-video
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Install dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+    pnpm install
+```
 
-## Learn More
+### 3. Set up environment variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the root directory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+    # SMTP Configuration for sending emails
+    SMTP_HOST=smtp.gmail.com
+    SMTP_PORT=587
+    SMTP_USER=your-email@gmail.com
+    SMTP_PASS=your-app-password
+    
+    # Email destination for quote requests
+    EMAIL_TO=your-email@gmail.com
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Important for Gmail users:**
+- Enable 2-Factor Authentication
+- Generate an [App Password](https://myaccount.google.com/apppasswords)
+- Use the app password in `SMTP_PASS` (not your regular password)
 
-## Deploy on Vercel
+**For other email providers:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Outlook/Hotmail:**
+```bash
+    SMTP_HOST=smtp-mail.outlook.com
+    SMTP_PORT=587
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Yahoo:**
+```bash
+    SMTP_HOST=smtp.mail.yahoo.com
+    SMTP_PORT=587
+```
+
+### 4. Run the development server
+
+```bash
+    pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📁 Project Structure
+
+```
+portifolio-to-video/
+├── app/
+│   ├── api/
+│   │   └── send-email/
+│   │       └── route.ts          # Email API endpoint
+│   ├── contact/
+│   │   └── page.tsx              # Contact page
+│   ├── videos/
+│   │   └── page.tsx              # Video gallery page
+│   ├── layout.tsx                # Root layout
+│   ├── page.tsx                  # Home page
+│   └── globals.css               # Global styles
+├── components/
+│   ├── ContentSection.tsx        # Reusable content section
+│   ├── Hero.tsx                  # Hero section component
+│   ├── Navbar.tsx                # Navigation bar
+│   ├── VideoGrid.tsx             # Video grid layout
+│   └── VideoModal.tsx            # Video modal player
+├── data/
+│   └── videos.ts                 # Video data
+├── types/
+│   └── index.ts                  # TypeScript type definitions
+└── public/
+    └── thumbs/                   # Video thumbnails
+```
+
+## 🎨 Customization
+
+### Adding Videos
+
+Edit `data/videos.ts`:
+
+```typescript
+export const videos: Video[] = [
+  {
+    id: '1',
+    title: 'Your Video Title',
+    category: 'Wedding', // or 'Event', 'Retreat'
+    youtubeId: 'YOUR_YOUTUBE_VIDEO_ID',
+    thumbnail: '/thumbs/your-thumbnail.png',
+    description: 'Your video description',
+  },
+  // Add more videos...
+];
+```
+
+### Modifying Contact Form
+
+The contact form is in `app/contact/page.tsx`. Fields include:
+- Name (required)
+- WhatsApp/Phone (required)
+- Event Date
+- Event Type (dropdown)
+- Message (required)
+
+### Updating FAQs
+
+Edit the `faqs` array in `app/contact/page.tsx`:
+
+```typescript
+const faqs = [
+  {
+    q: 'Your question?',
+    a: 'Your answer...',
+  },
+  // Add more FAQs...
+];
+```
+
+## 📧 Email Configuration
+
+The contact form sends emails using the API route at `app/api/send-email/route.ts`. Emails are sent asynchronously to avoid timeouts.
+
+**Email template includes:**
+- Client name
+- WhatsApp contact
+- Event date
+- Event type
+- Custom message
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import your repository on [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Deploy
+
+### Other Platforms
+
+Ensure your platform supports:
+- Node.js 18+
+- Environment variables
+- Next.js App Router
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+**Ronald Assis**
+- GitHub: [@ronald-assis](https://github.com/ronald-assis)
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons by [React Icons](https://react-icons.github.io/react-icons/)
+```
