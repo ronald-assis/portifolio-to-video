@@ -25,10 +25,13 @@ export default function ContactPage() {
   
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget
+    
     setStatus('sending');
     setErrorMessage('');
     
-    const formData = new FormData(e.currentTarget);
+    
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     
     try {
@@ -42,15 +45,14 @@ export default function ContactPage() {
       
       if (response.ok) {
         setStatus('success');
-        // Limpa o formulário em caso de sucesso
-        e.currentTarget.reset();
+        form.reset();
       } else {
+        
         const errorData = await response.json();
         setErrorMessage(errorData.error || 'Ocorreu um erro ao enviar. Tente novamente.');
         setStatus('error');
       }
     } catch (error) {
-      console.error('Falha na comunicação:', error);
       setErrorMessage('Falha na comunicação com o servidor. Verifique sua conexão.');
       setStatus('error');
     }
