@@ -20,14 +20,40 @@ const faqs = [
 ];
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('success');
-    }, 2000);
+    setErrorMessage('');
+    
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        // Limpa o formulário em caso de sucesso
+        e.currentTarget.reset();
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.error || 'Ocorreu um erro ao enviar. Tente novamente.');
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Falha na comunicação:', error);
+      setErrorMessage('Falha na comunicação com o servidor. Verifique sua conexão.');
+      setStatus('error');
+    }
   }
   
   if (status === 'success') {
@@ -112,7 +138,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="event_type" className="block text-sm font-medium text-neutral-300 mb-2">Tipo de Evento</label>
-                  <select id="event_type" name="event_type" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-neutral-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                  <select id="event_type" name="event_type" defaultValue="Casamento" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-neutral-300 focus:ring-2 focus:ring-blue-500 outline-none transition">
                     <option className="bg-neutral-800">Casamento</option>
                     <option className="bg-neutral-800">Retiro</option>
                     <option className="bg-neutral-800">Evento</option>
@@ -122,7 +148,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-neutral-300 mb-2">Me conte mais sobre o seu evento</label>
-                <textarea id="message" name="message" rows={4} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition"></textarea>
+                <textarea id="message" name="message" rows={4} required className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition"></textarea>
               </div>
               <button
                 type="submit"
@@ -131,6 +157,9 @@ export default function ContactPage() {
               >
                 {status === 'sending' ? 'Enviando...' : 'Solicitar Orçamento'}
               </button>
+              {status === 'error' && (
+                <p className="text-red-500 text-center mt-4">{errorMessage}</p>
+              )}
             </form>
           </div>
         </div>
