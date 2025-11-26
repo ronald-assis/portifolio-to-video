@@ -10,6 +10,14 @@ export const videos: Video[] = [
     orientation: 'horizontal'
   },
   {
+    id: 5,
+    title: 'ROOTS 02',
+    category: 'Eventos',
+    url: 'https://www.youtube.com/embed/vv48NBBTFZQ',
+    thumbnail: 'https://img.youtube.com/vi/vv48NBBTFZQ/maxresdefault.jpg',
+    orientation: 'horizontal'
+  },
+  {
     id: 2,
     title: 'Revisao de Vidas',
     category: 'Retiros',
