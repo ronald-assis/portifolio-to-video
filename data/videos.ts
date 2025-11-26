@@ -36,7 +36,7 @@ export const videos: Video[] = [
   {
     id: 4,
     title: 'Chá Revelação',
-    category: 'Eventos',
+    category: 'Aniversário',
     url: 'https://www.youtube.com/embed/hS3s-thXnmI',
     thumbnail: '/thumbs/revelacao.png',
     orientation: 'horizontal'
