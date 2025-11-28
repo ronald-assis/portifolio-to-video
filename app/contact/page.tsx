@@ -25,17 +25,16 @@ export default function ContactPage() {
   
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget
+    const form = e.currentTarget;
     
     setStatus('sending');
     setErrorMessage('');
-    
     
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     
     try {
-      const response = await fetch('/api/send-email', {
+      const emailResponse = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,12 +42,25 @@ export default function ContactPage() {
         body: JSON.stringify(data),
       });
       
-      if (response.ok) {
+      const sheetResponse = await fetch('/api/sheet', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          phone: data.phone,
+          message: data.message,
+          event_date: data.event_date || '',
+          event_type: data.event_type || '',
+        }),
+      });
+      
+      if (emailResponse.ok && sheetResponse.ok) {
         setStatus('success');
         form.reset();
       } else {
-        
-        const errorData = await response.json();
+        const errorData = await (emailResponse.ok ? sheetResponse : emailResponse).json();
         setErrorMessage(errorData.error || 'Ocorreu um erro ao enviar. Tente novamente.');
         setStatus('error');
       }
