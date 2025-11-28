@@ -27,7 +27,7 @@ export default function Navbar() {
       <nav className="fixed w-full z-50 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-lg border-b border-gray-200 dark:border-neutral-800 transition-colors">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" onClick={closeMenu} className="text-xl font-bold tracking-tighter text-neutral-900 dark:text-white z-10">
-            RONALD<span className="text-blue-500">.FILMS</span>
+            RA<span className="text-blue-500">.FILMS</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8">
