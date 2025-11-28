@@ -10,11 +10,6 @@ export async function POST(req: Request) {
     event_type: string;
   } = await req.json();
   
-  console.log(process.env.SMTP_USER, process.env.SMTP_PASS, process.env.SMTP_HOST, process.env.SMTP_PORT, process.env.FROM_EMAIL, process.env.EMAIL_TO);
-  
-  console.log(process.env.GOOGLE_SHEET_ID, process.env.GOOGLE_PRIVATE_KEY, process.env.GOOGLE_CLIENT_EMAIL);
-  
-  
   try {
     const auth = new google.auth.GoogleAuth({
       credentials: {
