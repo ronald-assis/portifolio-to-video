@@ -56,9 +56,19 @@ Create a `.env.local` file in the root directory:
     
     # Email destination for quote requests
     EMAIL_TO=your-email@gmail.com
+    
+    # Google Sheets Configuration
+    GOOGLE_SHEET_ID=your-spreadsheet-id
+    GOOGLE_CLIENT_EMAIL=your-service-account@project-id.iam.gserviceaccount.com
+    GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour-Private-Key-Here\n-----END PRIVATE KEY-----\n"
 ```
 
 **Important for Gmail users:**
+- For `GOOGLE_SHEET_ID`: Copy from the spreadsheet URL
+- For `GOOGLE_CLIENT_EMAIL`: Found in the downloaded JSON file as `client_email`
+- For `GOOGLE_PRIVATE_KEY`: Found in the JSON file as `private_key` (keep the quotes and `\n` characters)
+
+
 - Enable 2-Factor Authentication
 - Generate an [App Password](https://myaccount.google.com/apppasswords)
 - Use the app password in `SMTP_PASS` (not your regular password)
@@ -93,6 +103,8 @@ portifolio-to-video/
 │   ├── api/
 │   │   └── send-email/
 │   │       └── route.ts          # Email API endpoint
+│   │   └── sheet/
+│   │       └── route.ts          # Google Sheets API endpoint
 │   ├── contact/
 │   │   └── page.tsx              # Contact page
 │   ├── videos/
@@ -142,6 +154,23 @@ The contact form is in `app/contact/page.tsx`. Fields include:
 - Event Date
 - Event Type (dropdown)
 - Message (required)
+
+#### Form submissions are automatically saved to:
+1. Email: Sent via Nodemailer to `EMAIL_TO`
+2. Google Sheets: Stored in the configured spreadsheet with columns:
+
+- Nome (Name)
+- Telefone (Phone)
+- Mensagem (Message)
+- Data do Evento (Event Date)
+- Tipo de Evento (Event Type)
+- Data de Envio (Submission Date)
+
+### 📧 Email & Data Storage
+The contact form sends data to two endpoints:
+- `/api/send-email`: Sends email notification
+- `/api/sheet`: Saves data to Google Sheets
+
 
 ### Updating FAQs
 
